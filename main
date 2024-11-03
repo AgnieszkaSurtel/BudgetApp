@@ -1,0 +1,35 @@
+[33mcommit 85ca3237026ba158a57cec27367493da80f4e0c7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature__user-register[m[33m)[m
+Author: Agnieszka Surtel <surtel.aga@gmail.com>
+Date:   Tue Oct 29 19:53:45 2024 +0100
+
+    Added TinyXML-2 for library data menagment
+
+[33mcommit 07457420bac78533179c535784abdb8e82e13727[m
+Author: Agnieszka Surtel <surtel.aga@gmail.com>
+Date:   Tue Oct 29 18:52:22 2024 +0100
+
+    Add regisrated user to vector
+
+[33mcommit 00faefe071244d9b2faa06491fab3686e6c47f82[m
+Author: Agnieszka Surtel <surtel.aga@gmail.com>
+Date:   Wed Oct 23 21:02:48 2024 +0200
+
+    Created base class and modyfied exist class
+
+[33mcommit ebb07ac43b8eeacdfb50f689926f5e212692d793[m
+Author: Agnieszka Surtel <surtel.aga@gmail.com>
+Date:   Mon Oct 21 20:55:51 2024 +0200
+
+    Adding the necessary folders to the registration process
+
+[33mcommit b7305e0006276295d02b030fd794044d02c0f93c[m
+Author: Agnieszka Surtel <surtel.aga@gmail.com>
+Date:   Mon Oct 21 20:24:07 2024 +0200
+
+    Empty project
+
+[33mcommit e41469d9819b91b620e5fd5e13a2a17b9e96e4bf[m
+Author: Agnieszka Surtel <surtel.aga@gmail.com>
+Date:   Mon Oct 21 20:22:45 2024 +0200
+
+    Added .gitignore
