@@ -1,9 +1,16 @@
 #include <iostream>
 
+
+#include "UserManager.h"
+
 using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    UserManager userManager;
+     cout << "REGISTRATION" << endl << endl;
+    userManager.registerUser();
+
+    userManager.wypiszWszystkichUzytkownikow();
     return 0;
 }
