@@ -1,26 +1,56 @@
 #ifndef USERFILE_H
 #define USERFILE_H
 
-#include <vector>
 #include <string>
-#include "UserFile.h" // zak³adam, ¿e masz plik nag³ówkowy z deklaracj¹ struktury User
+#include <vector>
+#include "User.h"
+#include "Markup.h"
+
+using namespace std;
 
 class UserFile {
 private:
-    std::string userFileName;  // Nazwa pliku z u¿ytkownikami
+    string fileName;
 
 public:
+    UserFile(const string& userFileName) : fileName(userFileName) {}
+    vector<User> loadUsersFromFile();
+    bool addUserToFile(const User& user);
+};
+
+#endif
+
+
+
+
+
+
+/*#ifndef USERFILE_H
+#define USERFILE_H
+
+#include <vector>
+#include <string>
+#include "UserFile.h"
+
+using namespace std;
+
+
+class UserFile {
+private:
+  string userFileName;
+public:
     // Konstruktor przyjmuj¹cy nazwê pliku
-    UserFile(std::string fileName);
+    UserFile string (fileName);
 
     // Metoda do wczytania u¿ytkowników z pliku
-    std::vector<User> loadUsersFromFile();
+    vector<User> loadUsersFromFile();
 
     // Metoda do dodania nowego u¿ytkownika do pliku
     bool addUserToFile(const User &user);
 
     // Metoda do zmiany has³a w pliku na podstawie ID u¿ytkownika
-    bool changePasswordInFile(int userId, const std::string &newPassword);
+    bool changePasswordInFile(int userId, const string &newPassword);
 };
 
 #endif
+*/

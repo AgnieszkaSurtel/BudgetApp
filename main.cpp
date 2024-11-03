@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Markup.h"
+
 
 #include "UserManager.h"
 
@@ -10,8 +10,7 @@ int main()
     UserManager userManager;
      cout << "REGISTRATION" << endl << endl;
     userManager.registerUser();
-    userManager.registerUser();
-    userManager.registerUser();
+
     userManager.wypiszWszystkichUzytkownikow();
     return 0;
 }
