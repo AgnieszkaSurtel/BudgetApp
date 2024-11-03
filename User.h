@@ -21,11 +21,11 @@ public:
 
     //gettery
 
-    int getId();
-    string getFirstName();
-    string getLastName();
-    string getLogin();
-    string getPassword();
+    int getId() const;
+    string getFirstName() const;
+    string getLastName() const;
+    string getLogin() const;
+    string getPassword() const;
 };
 
 #endif

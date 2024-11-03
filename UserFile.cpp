@@ -1,52 +1,77 @@
 #include "UserFile.h"
+#include "User.h"
+#include "Markup.h"
+#include <iostream>
 
 using namespace std;
 
-bool UserFile::addUserToFile(const User& user) {
+// Dodawanie użytkownika do pliku XML
+bool UserFile::addUserToFile(const User& user)
+{
     CMarkup xml;
-    bool fileExists = xml.Load(fileName);
 
-    // Je�li plik nie istnieje, tw�rz nowy dokument XML
-    if (!fileExists) {
+    // Wczytaj plik XML, jeśli istnieje
+    bool fileExists = xml.Load("users.xml");
+
+    // Jeśli plik nie istnieje, utwórz nowy dokument XML
+    if (!fileExists)
+    {
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem("Users");
-    } else {
-        xml.FindElem();
-        xml.IntoElem();
     }
 
-    // Dodaj nowego u�ytkownika do XML
+    // Przejdź do głównego elementu "Users"
+    xml.FindElem("Users");
+    xml.IntoElem();
+
+    // Dodaj nowy element "User" z danymi użytkownika
     xml.AddElem("User");
     xml.IntoElem();
-    xml.AddElem("UserId", to_string(user.id));
-    xml.AddElem("Login", user.login);
-    xml.AddElem("Password", user.password);
-    xml.AddElem("FirstName", user.firstName);
-    xml.AddElem("LastName", user.lastName);
-    xml.OutOfElem(); // Wracamy do elementu "Users"
+    xml.AddElem("UserId", to_string(user.getId()));
+    xml.AddElem("Login", user.getLogin());
+    xml.AddElem("Password", user.getPassword());
+    xml.OutOfElem(); // Powrót do elementu "Users"
 
-    return xml.Save(fileName); // Zapisz plik
+    // Zapisz zmiany do pliku XML
+    xml.Save("users.xml");
+    return true;
 }
 
-vector<User> UserFile::loadUsersFromFile() {
-vector<User> users;
+// Wczytywanie użytkowników z pliku XML
+vector<User> UserFile::loadUsersFromFile()
+{
+    vector<User> users;
     CMarkup xml;
-    bool fileExists = xml.Load(fileName);
-    if (fileExists) {
-        xml.FindElem("Users");
-        xml.IntoElem();
-        while (xml.FindElem("User")) {
-            User user;
-            xml.IntoElem();
-            user.id = stoi(xml.GetElemContent("UserId"));
-            user.login = xml.GetElemContent("Login");
-            user.password = xml.GetElemContent("Password");
-            user.firstName = xml.GetElemContent("FirstName");
-            user.lastName = xml.GetElemContent("LastName");
-            users.push_back(user);
-            xml.OutOfElem();
-        }
+
+    // Wczytaj plik XML
+    if (!xml.Load("users.xml")) {
+        cout << "Nie znaleziono pliku users.xml. Brak uzytkowników do załadowania." << endl;
+        return users; // Zwraca pusty wektor, jeśli plik nie istnieje
     }
+
+    // Przejdź do głównego elementu "Users"
+    xml.FindElem("Users");
+    xml.IntoElem();
+
+    // Wczytaj każdy element "User" z danymi użytkowników
+    while (xml.FindElem("User")) {
+        User user;
+        xml.IntoElem();
+
+        // Pobierz dane użytkownika
+        if (xml.FindElem("UserId")) {
+            user.setId(stoi(xml.GetData()));
+        }
+        if (xml.FindElem("Login")) {
+            user.setLogin(xml.GetData());
+        }
+        if (xml.FindElem("Password")) {
+            user.setPassword(xml.GetData());
+        }
+
+        xml.OutOfElem(); // Powrót do listy "User"
+        users.push_back(user); // Dodaj użytkownika do wektora
+    }
+
     return users;
 }
-

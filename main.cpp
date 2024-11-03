@@ -1,14 +1,15 @@
 #include <iostream>
 
-
 #include "UserManager.h"
 
 using namespace std;
 
 int main()
 {
-    UserManager userManager;
+    UserManager userManager("users.xml");
      cout << "REGISTRATION" << endl << endl;
+    userManager.registerUser();
+    userManager.registerUser();
     userManager.registerUser();
 
     userManager.wypiszWszystkichUzytkownikow();

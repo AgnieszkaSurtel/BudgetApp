@@ -22,23 +22,23 @@ void User::setPassword (string newPassword)
     password = newPassword;
 }
 
-int User::getId()
+int User::getId() const
 {
     return id;
 }
-string User::getFirstName()
+string User::getFirstName() const
 {
     return firstName;
 }
-string User::getLastName()
+string User::getLastName() const
 {
     return lastName;
 }
-string User::getLogin()
+string User::getLogin() const
 {
     return login;
 }
-string User::getPassword()
+string User::getPassword() const
 {
     return password;
 }

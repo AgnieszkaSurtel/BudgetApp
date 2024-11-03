@@ -1,9 +1,12 @@
 #include "UserManager.h"
+#include "UserFile.h"
 
 void UserManager::registerUser()
 {
     User user =  enterUserData();
     users.push_back(user);
+
+    userFile.addUserToFile(user); // Zapisz nowego u¿ytkownika do pliku XML
 
     cout << endl << "Account created successfully" << endl << endl;
     system("pause");
