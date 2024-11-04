@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "UserManager.h"
 #include "UserFile.h"
 
@@ -6,7 +8,7 @@ void UserManager::registerUser()
     User user =  enterUserData();
     users.push_back(user);
 
-    userFile.addUserToFile(user); // Zapisz nowego u�ytkownika do pliku XML
+    userFile.addUserToFile(user); // Zapisz nowego u¿ytkownika do pliku XML
 
     cout << endl << "Account created successfully" << endl << endl;
     system("pause");
@@ -61,15 +63,46 @@ bool UserManager::checkIfLoginExist (const string &login)
     return false;
 }
 
-void UserManager::wypiszWszystkichUzytkownikow()
+bool UserManager::loginUser()
 {
-        for (int i = 0; i < users.size(); i++)
-    {
-        cout << "ID: " << users[i].getId() << endl;
-        cout << "First Name: " << users[i].getFirstName() << endl;
-        cout << "Last Name: " << users[i].getLastName() << endl;
-        cout << "Login " << users[i].getLogin() << endl;
-        cout << "Password: " << users[i].getPassword() << endl;
+    string login, password;
+    cout << "Enter your login: ";
+    cin >> login;
+    cout << "Enter your password: ";
+    cin >> password;
 
+    for (auto itr = users.begin(); itr != users.end(); ++itr)
+    {
+        if (itr->getLogin() == login && itr->getPassword() == password)
+        {
+            loggedUserId = itr->getId();
+            cout << "Login successful! Welcome, " << itr->getFirstName() << "!" << endl;
+            return true;
+        }
     }
+
+    cout << "Invalid login or password." << endl;
+    return false;
+}
+
+void UserManager::changeUserPassword()
+{
+    string newPassword;
+    cout << "Wprowadź nowe hasło: ";
+    cin >> newPassword;
+
+    if (userFile.changePasswordInFile(loggedUserId, newPassword))
+    {
+        cout << "Hasło zostało pomyślnie zmienione." << endl;
+    }
+    else
+    {
+        cout << "Nie znaleziono użytkownika. Zmiana hasła nie powiodła się." << endl;
+    }
+}
+
+void UserManager::logoutUser()
+{
+    loggedUserId = -1;
+    cout << "Logged out successfully." << endl;
 }

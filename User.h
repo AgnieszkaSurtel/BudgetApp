@@ -11,15 +11,12 @@ struct User
     string firstName, lastName, login, password;
 
 public:
-    //settery
 
     void setId (int newId);
     void setFirstName(string newFirstName);
     void setLastName (string newLastName);
     void setLogin(string newLogin);
     void setPassword (string newPassword);
-
-    //gettery
 
     int getId() const;
     string getFirstName() const;
