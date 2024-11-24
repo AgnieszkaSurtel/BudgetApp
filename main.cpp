@@ -1,43 +1,79 @@
 #include <iostream>
 
-#include "UserManager.h"
+#include "BudgetMainApp.h"
+#include "Menus.h"
+
+#include "Utils.h"
 
 using namespace std;
 
-int main()
+int main ()
 {
-    UserManager userManager("users.xml");
+    BudgetMainApp budgetMainApp ("users.xml", "incomes.xml", "expenses.xml");
 
-    cout << "=== REJESTRACJA ===" << endl;
+    char choice;
 
-    //userManager.registerUser();
-
-    cout << "=== LOGOWANIE ===" << endl;
-    if (userManager.loginUser())
+    while(true)
     {
-        cout << "Logowanie zakonczone sukcesem!" << endl;
-
-        char choice;
-        cout << "Czy chcesz zmienic haslo? (t/n): ";
-        cin >> choice;
-
-        if (choice == 't' || choice == 'T')
+        if(!budgetMainApp.isUserLoggedIn())
         {
-            userManager.changeUserPassword();
+            Menus::showTitle("HOME MENU");
+            Menus::showHomeMenu();
+
+            choice = Utils::getCharacter();
+
+            switch (choice)
+            {
+            case '1':
+                budgetMainApp.loginUser();
+                break;
+            case '2':
+                budgetMainApp.registerUser();
+                break;
+            case '9':
+                cout <<"See you next time! " << endl;
+                break;
+            default:
+                cout <<"Character not recognized. Try again: " << endl;
+                break;
+
+            }
         }
         else
         {
-            cout << "Nie zmieniono has³a." << endl;
+            Menus::showTitle("MAIN MENU");
+            Menus::showMainMenu();
+
+            choice = Utils::getCharacter();
+
+            switch (choice)
+            {
+            case '1':
+                budgetMainApp.addIncome();
+                break;
+            case '2':
+                budgetMainApp.addExpense();
+                break;
+            case '3':
+                budgetMainApp.showCurrentMonthBalance();
+                break;
+            case '4':
+                budgetMainApp.showPreviousMonthBalance();
+                break;
+            case '5':
+                budgetMainApp.showCustomPeriodBalance();
+                break;
+            case '6':
+                budgetMainApp.changeUserPassword();
+                break;
+            case '8':
+                budgetMainApp.logoutUser();
+                break;
+            default:
+                cout << "Character not recognized. Try again: " << endl;
+                system("pause");
+                break;
+            }
         }
     }
-    else
-    {
-        cout << "Logowanie nie powiod³o siê. Sprawdz login i haslo." << endl;
-    }
-
-
-    return 0;
-
-//    userManager.wypiszWszystkichUzytkownikow();
-    return 0;
 }

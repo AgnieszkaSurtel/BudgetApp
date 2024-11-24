@@ -18,23 +18,31 @@ class UserManager
     UserFile userFile;
 
     User enterUserData();
-    int getLoggedUserId();
+
     bool checkIfLoginExist (const string &login);
     void findUserByLogin(const string &login, vector<User>::iterator &itr);
     void findUserById(int id, vector<User>::iterator &itr);
 
 public:
 
-     UserManager(string userFileName) : userFile(userFileName) {
-        users = userFile.loadUsersFromFile(); // Wczytaj u¿ytkowników z pliku
+    UserManager(string userFileName) : userFile(userFileName)
+    {
+        users = userFile.loadUsersFromFile();
         loggedUserId = -1;
     }
+    int getLoggedUserId();
     void registerUser();
     bool loginUser();
     void changeUserPassword();
     void logoutUser();
-    bool isUserLoggedIn() const { return loggedUserId != -1; }
-    int getLoggedUserId() const { return loggedUserId; }
+    bool isUserLoggedIn() const
+    {
+        return loggedUserId != -1;
+    }
+    int getLoggedUserId() const
+    {
+        return loggedUserId;
+    }
 
 };
 

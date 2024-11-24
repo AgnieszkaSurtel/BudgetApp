@@ -38,7 +38,7 @@ vector<User> UserFile::loadUsersFromFile()
 
     if (!xml.Load("users.xml"))
     {
-        cout << "Nie znaleziono pliku users.xml. Brak uzytkowników do załadowania." << endl;
+        cout << "File users.xml not found." << endl;
         return users;
     }
 

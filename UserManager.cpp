@@ -2,14 +2,14 @@
 
 #include "UserManager.h"
 #include "UserFile.h"
+#include "BudgetManager.h"
 
 void UserManager::registerUser()
 {
     User user =  enterUserData();
     users.push_back(user);
 
-    userFile.addUserToFile(user); // Zapisz nowego u¿ytkownika do pliku XML
-
+    userFile.addUserToFile(user);
     cout << endl << "Account created successfully" << endl << endl;
     system("pause");
 }
@@ -88,16 +88,16 @@ bool UserManager::loginUser()
 void UserManager::changeUserPassword()
 {
     string newPassword;
-    cout << "Wprowadź nowe hasło: ";
+    cout << "Enter new password: ";
     cin >> newPassword;
 
     if (userFile.changePasswordInFile(loggedUserId, newPassword))
     {
-        cout << "Hasło zostało pomyślnie zmienione." << endl;
+        cout << "Password has been successfully changed." << endl;
     }
     else
     {
-        cout << "Nie znaleziono użytkownika. Zmiana hasła nie powiodła się." << endl;
+        cout << " User not found. Password change failed." << endl;
     }
 }
 
