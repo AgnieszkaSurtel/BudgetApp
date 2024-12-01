@@ -19,7 +19,7 @@ class UserManager
 
     User enterUserData();
 
-   // bool checkIfLoginExist (const string &login);
+    // bool checkIfLoginExist (const string &login);
     void findUserByLogin(const string &login, vector<User>::iterator &itr);
     void findUserById(int id, vector<User>::iterator &itr);
 
@@ -47,7 +47,7 @@ public:
 
 private:
     //User enterUserData();
-   // int getLoggedUserId();
+    // int getLoggedUserId();
     bool checkIfLoginExist (const string &login);
 
 

@@ -2,9 +2,10 @@
 #define UTILS_H
 
 #include <iostream>
-#include <limits> /
+#include <limits>
 
-class Utils {
+class Utils
+{
 public:
     static char getCharacter();
 };

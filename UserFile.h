@@ -8,7 +8,8 @@
 
 using namespace std;
 
-class UserFile {
+class UserFile
+{
 private:
     string fileName;
 
@@ -16,7 +17,7 @@ public:
     UserFile(const string& userFileName) : fileName(userFileName) {}
     vector<User> loadUsersFromFile();
     bool addUserToFile(const User& user);
-	 bool changePasswordInFile(int id, const string& newPassword); 
+    bool changePasswordInFile(int id, const string& newPassword);
 };
 
 #endif

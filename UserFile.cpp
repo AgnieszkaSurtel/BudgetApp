@@ -63,7 +63,7 @@ vector<User> UserFile::loadUsersFromFile()
         {
             user.setPassword(xml.GetData());
         }
-         if (xml.FindElem("FirstName"))
+        if (xml.FindElem("FirstName"))
         {
             user.setFirstName(xml.GetData());
         }

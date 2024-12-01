@@ -1,15 +1,19 @@
 #include "Utils.h"
 
-char Utils::getCharacter() {
+using namespace std;
+
+char Utils::getCharacter()
+{
     char character;
-    std::cin >> character;
+    cin >> character;
 
 
-    while (std::cin.fail() || std::cin.get() != '\n') {
-        std::cout << "Invalid input. Please enter a single character: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cin >> character;
+    while (cin.fail() || cin.get() != '\n')
+    {
+        cout << "Invalid input. Please enter a single character: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> character;
     }
 
     return character;

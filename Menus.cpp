@@ -1,11 +1,13 @@
 #include "Menus.h"
 
 
-void Menus::showTitle(const string& title) {
+void Menus::showTitle(const string& title)
+{
     cout << "=== " << title << " ===" << endl;
 }
 
-void Menus::showHomeMenu() {
+void Menus::showHomeMenu()
+{
     cout << "1. Login" << endl;
     cout << "2. Register" << endl;
     cout << "9. Exit" << endl;
@@ -13,7 +15,8 @@ void Menus::showHomeMenu() {
     cout << "Your choice: ";
 }
 
-void Menus::showMainMenu() {
+void Menus::showMainMenu()
+{
     cout << "1. Add income: " << endl;
     cout << "2. Add expense: " << endl;
     cout << "3. Current month balance: " << endl;

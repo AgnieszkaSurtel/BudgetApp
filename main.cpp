@@ -3,10 +3,7 @@
 
 #include "BudgetMainApp.h"
 #include "Menus.h"
-
 #include "Utils.h"
-
-
 #include "UserManager.h"
 
 using namespace std;
@@ -78,14 +75,15 @@ int main ()
                 break;
             default:
                 cout << "Character not recognized. Try again: " << endl;
+                system ("pause");
                 break;
             }
 
         }
     }
 
-     UserManager userManager("users.xml");
-     cout << "REGISTRATION" << endl << endl;
+    UserManager userManager("users.xml");
+    cout << "REGISTRATION" << endl << endl;
     userManager.registerUser();
 
 

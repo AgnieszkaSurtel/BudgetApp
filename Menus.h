@@ -4,7 +4,8 @@
 #include <iostream>
 using namespace std;
 
-class Menus {
+class Menus
+{
 public:
     static void showTitle(const string& title);
     static void showHomeMenu();
