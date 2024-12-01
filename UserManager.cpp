@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdlib>
 
 #include "UserManager.h"
 #include "UserFile.h"
@@ -12,6 +13,7 @@ void UserManager::registerUser()
     userFile.addUserToFile(user);
     cout << endl << "Account created successfully" << endl << endl;
     system("pause");
+    system ("cls");
 }
 
 User UserManager::enterUserData()
@@ -49,6 +51,10 @@ int UserManager::getLoggedUserId()
     else return users.back().getId() + 1;
 }
 
+/*{
+    return loggedUserId;
+}
+*/
 bool UserManager::checkIfLoginExist (const string &login)
 {
     for (int i = 0; i < users.size(); i++)
@@ -77,11 +83,15 @@ bool UserManager::loginUser()
         {
             loggedUserId = itr->getId();
             cout << "Login successful! Welcome, " << itr->getFirstName() << "!" << endl;
+            system ("pause");
+            system ("cls");
             return true;
+
         }
     }
-
     cout << "Invalid login or password." << endl;
+    system ("pause");
+    system ("cls");
     return false;
 }
 
@@ -93,6 +103,7 @@ void UserManager::changeUserPassword()
 
     if (userFile.changePasswordInFile(loggedUserId, newPassword))
     {
+        users = userFile.loadUsersFromFile();
         cout << "Password has been successfully changed." << endl;
     }
     else

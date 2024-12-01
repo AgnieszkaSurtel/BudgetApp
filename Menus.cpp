@@ -1,5 +1,6 @@
 #include "Menus.h"
 
+
 void Menus::showTitle(const string& title) {
     cout << "=== " << title << " ===" << endl;
 }
@@ -22,4 +23,5 @@ void Menus::showMainMenu() {
     cout << "8. Logout" << endl;
     cout << endl;
     cout << " Your choice: ";
+
 }

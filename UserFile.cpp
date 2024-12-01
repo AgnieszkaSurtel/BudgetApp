@@ -25,6 +25,8 @@ bool UserFile::addUserToFile(const User& user)
     xml.AddElem("UserId", to_string(user.getId()));
     xml.AddElem("Login", user.getLogin());
     xml.AddElem("Password", user.getPassword());
+    xml.AddElem("FirstName", user.getFirstName());
+    xml.AddElem("LastName", user.getLastName());
     xml.OutOfElem();
 
     xml.Save("users.xml");
@@ -38,7 +40,7 @@ vector<User> UserFile::loadUsersFromFile()
 
     if (!xml.Load("users.xml"))
     {
-        cout << "File users.xml not found." << endl;
+        //cout << "File users.xml not found." << endl;
         return users;
     }
 
@@ -62,7 +64,10 @@ vector<User> UserFile::loadUsersFromFile()
         {
             user.setPassword(xml.GetData());
         }
-
+         if (xml.FindElem("FirstName"))
+        {
+            user.setFirstName(xml.GetData());
+        }
         xml.OutOfElem();
         users.push_back(user);
     }

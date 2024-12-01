@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 #include "BudgetMainApp.h"
 #include "Menus.h"
@@ -32,6 +33,7 @@ int main ()
                 break;
             case '9':
                 cout <<"See you next time! " << endl;
+                system("pause");
                 break;
             default:
                 cout <<"Character not recognized. Try again: " << endl;
@@ -41,6 +43,7 @@ int main ()
         }
         else
         {
+
             Menus::showTitle("MAIN MENU");
             Menus::showMainMenu();
 
@@ -71,9 +74,9 @@ int main ()
                 break;
             default:
                 cout << "Character not recognized. Try again: " << endl;
-                system("pause");
                 break;
             }
+
         }
     }
 }
