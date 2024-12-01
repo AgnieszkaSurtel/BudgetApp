@@ -6,7 +6,10 @@
 #include <windows.h>
 
 #include "User.h"
+<<<<<<< HEAD
 #include "UserFile.h"
+=======
+>>>>>>> feature_Save_to_xml
 
 
 using namespace std;
@@ -15,6 +18,7 @@ class UserManager
 {
     int loggedUserId;
     vector <User> users;
+<<<<<<< HEAD
     UserFile userFile;
 
     User enterUserData();
@@ -43,6 +47,19 @@ public:
     {
         return loggedUserId;
     }
+=======
+
+private: // domyslnie wszystko jest prywatne
+    User enterUserData();
+    int getLoggedUserId();
+    bool checkIfLoginExist (const string &login);
+
+
+
+public:
+    void registerUser();
+    void wypiszWszystkichUzytkownikow();
+>>>>>>> feature_Save_to_xml
 
 };
 

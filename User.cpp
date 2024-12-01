@@ -22,6 +22,7 @@ void User::setPassword (string newPassword)
     password = newPassword;
 }
 
+<<<<<<< HEAD
 int User::getId() const
 {
     return id;
@@ -39,6 +40,25 @@ string User::getLogin() const
     return login;
 }
 string User::getPassword() const
+=======
+int User::getId()
+{
+    return id;
+}
+string User::getFirstName()
+{
+    return firstName;
+}
+string User::getLastName()
+{
+    return lastName;
+}
+string User::getLogin()
+{
+    return login;
+}
+string User::getPassword()
+>>>>>>> feature_Save_to_xml
 {
     return password;
 }

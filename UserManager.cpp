@@ -1,19 +1,28 @@
+<<<<<<< HEAD
 #include <algorithm>
 #include <cstdlib>
 
 #include "UserManager.h"
 #include "UserFile.h"
 #include "BudgetManager.h"
+=======
+#include "UserManager.h"
+>>>>>>> feature_Save_to_xml
 
 void UserManager::registerUser()
 {
     User user =  enterUserData();
     users.push_back(user);
 
+<<<<<<< HEAD
     userFile.addUserToFile(user);
     cout << endl << "Account created successfully" << endl << endl;
     system("pause");
     system ("cls");
+=======
+    cout << endl << "Account created successfully" << endl << endl;
+    system("pause");
+>>>>>>> feature_Save_to_xml
 }
 
 User UserManager::enterUserData()
@@ -51,10 +60,13 @@ int UserManager::getLoggedUserId()
     else return users.back().getId() + 1;
 }
 
+<<<<<<< HEAD
 /*{
     return loggedUserId;
 }
 */
+=======
+>>>>>>> feature_Save_to_xml
 bool UserManager::checkIfLoginExist (const string &login)
 {
     for (int i = 0; i < users.size(); i++)
@@ -69,6 +81,7 @@ bool UserManager::checkIfLoginExist (const string &login)
     return false;
 }
 
+<<<<<<< HEAD
 bool UserManager::loginUser()
 {
     string login, password;
@@ -117,3 +130,17 @@ void UserManager::logoutUser()
     loggedUserId = -1;
     cout << "Logged out successfully." << endl;
 }
+=======
+void UserManager::wypiszWszystkichUzytkownikow()
+{
+        for (int i = 0; i < users.size(); i++)
+    {
+        cout << "ID: " << users[i].getId() << endl;
+        cout << "First Name: " << users[i].getFirstName() << endl;
+        cout << "Last Name: " << users[i].getLastName() << endl;
+        cout << "Login " << users[i].getLogin() << endl;
+        cout << "Password: " << users[i].getPassword() << endl;
+
+    }
+}
+>>>>>>> feature_Save_to_xml
