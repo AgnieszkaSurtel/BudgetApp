@@ -13,7 +13,7 @@ using namespace std;
 
 int main ()
 {
-<<<<<<< HEAD
+
     BudgetMainApp budgetMainApp ("users.xml", "incomes.xml", "expenses.xml");
 
     char choice;
@@ -83,12 +83,12 @@ int main ()
 
         }
     }
-=======
+
     UserManager userManager;
      cout << "REGISTRATION" << endl << endl;
     userManager.registerUser();
 
-    userManager.wypiszWszystkichUzytkownikow();
+  
     return 0;
->>>>>>> feature_Save_to_xml
+>
 }
