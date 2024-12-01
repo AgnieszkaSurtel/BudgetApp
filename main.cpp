@@ -84,11 +84,11 @@ int main ()
         }
     }
 
-    UserManager userManager;
+     UserManager userManager("users.xml");
      cout << "REGISTRATION" << endl << endl;
     userManager.registerUser();
 
-  
+
     return 0;
->
+
 }
