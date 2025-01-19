@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include <windows.h>
 
 #include "User.h"
 
@@ -19,9 +18,9 @@ class UserManager
 
     User enterUserData();
 
-    // bool checkIfLoginExist (const string &login);
     void findUserByLogin(const string &login, vector<User>::iterator &itr);
     void findUserById(int id, vector<User>::iterator &itr);
+    bool checkIfLoginExist (const string &login);
 
 public:
 
@@ -30,30 +29,12 @@ public:
         users = userFile.loadUsersFromFile();
         loggedUserId = -1;
     }
-    int getLoggedUserId();
+    int getLoggedUserId() const;
     void registerUser();
     bool loginUser();
     void changeUserPassword();
     void logoutUser();
-    bool isUserLoggedIn() const
-    {
-        return loggedUserId != -1;
-    }
-    int getLoggedUserId() const
-    {
-        return loggedUserId;
-    }
-
-
-private:
-    //User enterUserData();
-    // int getLoggedUserId();
-    bool checkIfLoginExist (const string &login);
-
-
-
-
-
+    bool isUserLoggedIn() const;
 
 
 };

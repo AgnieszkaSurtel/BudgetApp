@@ -12,6 +12,8 @@ class BudgetMainApp
 private:
     UserManager userManager;
     BudgetManager *budgetManager;
+    const string INCOME_FILE_NAME;
+    const string EXPENSE_FILE_NAME;
 
 public:
     BudgetMainApp(const string& userFileName, const string& incomeFileName, const string& expenseFileName);
@@ -22,12 +24,11 @@ public:
     void loginUser();
     void changeUserPassword();
     void logoutUser();
-
     void addIncome();
     void addExpense();
     void showCurrentMonthBalance();
     void showPreviousMonthBalance();
-    void showCustomPeriodBalance();
+    void showCustomPeriodBalance ();
 };
 
 #endif

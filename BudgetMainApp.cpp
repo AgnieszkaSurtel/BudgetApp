@@ -1,11 +1,16 @@
+#include <iostream>
+
+#include "Type.h"
 #include "BudgetMainApp.h"
 #include "BudgetManager.h"
-#include <iostream>
+
 
 using namespace std;
 
+
 BudgetMainApp::BudgetMainApp(const string& userFileName, const string& incomeFileName, const string& expenseFileName)
-    : userManager(userFileName), budgetManager(nullptr) {}
+    : userManager(userFileName), budgetManager(nullptr),
+      INCOME_FILE_NAME(incomeFileName), EXPENSE_FILE_NAME(expenseFileName) {}
 
 BudgetMainApp::~BudgetMainApp()
 {
@@ -26,8 +31,7 @@ void BudgetMainApp::loginUser()
 {
     if (userManager.loginUser())
     {
-        //budgetManager = new BudgetManager("incomes.xml", "expenses.xml", userManager.getLoggedUserId());
-        userManager.getLoggedUserId();
+        budgetManager = new BudgetManager(INCOME_FILE_NAME, EXPENSE_FILE_NAME, userManager.getLoggedUserId());
     }
 }
 
@@ -45,25 +49,60 @@ void BudgetMainApp::logoutUser()
 
 void BudgetMainApp::addIncome()
 {
-    // Dodanie przychodu
+    if (userManager.isUserLoggedIn() && budgetManager != nullptr)
+    {
+        budgetManager->addIncome();
+    }
+    else
+    {
+        cout << "You must be logged in to add an income!" << endl;
+    }
 }
 
 void BudgetMainApp::addExpense()
 {
-    // Dodanie wydatku
+    if (userManager.isUserLoggedIn() && budgetManager != nullptr)
+    {
+        budgetManager->addExpense();
+    }
+    else
+    {
+        cout << "You must be logged in to add an expense!" << endl;
+    }
 }
 
 void BudgetMainApp::showCurrentMonthBalance()
 {
-    // Wyœwietlenie bilansu bie¿¹cego miesi¹ca
+    if (userManager.isUserLoggedIn() && budgetManager != nullptr)
+    {
+        budgetManager->showCurrentMonthBalance();
+    }
+    else
+    {
+        cout << "You must be logged in to view your balance!" << endl;
+    }
 }
 
 void BudgetMainApp::showPreviousMonthBalance()
 {
-    // Wyœwietlenie bilansu poprzedniego miesi¹ca
+    if (userManager.isUserLoggedIn() && budgetManager != nullptr)
+    {
+        budgetManager->showPreviousMonthBalance();
+    }
+    else
+    {
+        cout << "You must be logged in to view your balance!" << endl;
+    }
 }
 
 void BudgetMainApp::showCustomPeriodBalance()
 {
-    // Wyœwietlenie bilansu za niestandardowy okres
+    if (userManager.isUserLoggedIn() && budgetManager != nullptr)
+    {
+    budgetManager->showCustomPeriodBalance();
+    }
+    else
+    {
+        cout << "You must be logged in to view your balance!" << endl;
+    }
 }

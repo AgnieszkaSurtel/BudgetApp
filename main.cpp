@@ -10,6 +10,7 @@ using namespace std;
 
 int main ()
 {
+    int startDate, endDate;
 
     BudgetMainApp budgetMainApp ("users.xml", "incomes.xml", "expenses.xml");
 
@@ -34,7 +35,7 @@ int main ()
                 break;
             case '9':
                 cout <<"See you next time! " << endl;
-                system("pause");
+                exit (0);
                 break;
             default:
                 cout <<"Character not recognized. Try again: " << endl;

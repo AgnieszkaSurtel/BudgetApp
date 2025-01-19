@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Operations>
+<Operation>
+<Id>1</Id>
+<UserId>3</UserId>
+<Date>20250119</Date>
+<Item>salary1</Item>
+<Amount>50.50</Amount>
+</Operation>
+<Operation>
+<Id>1</Id>
+<UserId>3</UserId>
+<Date>20250119</Date>
+<Item>tezwyplata</Item>
+<Amount>800.75</Amount>
+</Operation>
+</Operations>

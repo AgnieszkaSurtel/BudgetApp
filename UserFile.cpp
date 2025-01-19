@@ -77,6 +77,7 @@ vector<User> UserFile::loadUsersFromFile()
 bool UserFile::changePasswordInFile(int id, const string &newPassword)
 {
     CMarkup xml;
+    string fileName = "users.xml";
     bool fileExists = xml.Load(fileName);
 
     if (!fileExists)

@@ -47,9 +47,9 @@ User UserManager::enterUserData()
     return user;
 }
 
-int UserManager::getLoggedUserId()
+int UserManager::getLoggedUserId() const
 {
-    if (users.empty() ==true)
+    if (users.empty() == true)
         return 1;
     else return users.back().getId() + 1;
 }
@@ -94,6 +94,11 @@ bool UserManager::loginUser()
     return false;
 }
 
+bool UserManager::isUserLoggedIn() const
+{
+    return loggedUserId != -1;
+}
+
 void UserManager::changeUserPassword()
 {
     string newPassword;
@@ -115,4 +120,6 @@ void UserManager::logoutUser()
 {
     loggedUserId = -1;
     cout << "Logged out successfully." << endl;
+    system ("pause");
+    system ("cls");
 }

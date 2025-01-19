@@ -2,5 +2,5 @@
 enum Type
 {
     INCOME,
-    EXPANSE
+    EXPENSE
 };
