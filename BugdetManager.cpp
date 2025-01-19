@@ -82,12 +82,11 @@ void BudgetManager::addTransaction(Type type)
     cout << "Enter the amount: ";
     getline(cin, amountStr);
 
-    // Zamiana przecinków na kropki w kwocie
     replace(amountStr.begin(), amountStr.end(), ',', '.');
 
     try
     {
-        amount = stod(amountStr); // Przekszta³cenie stringa na double
+        amount = stod(amountStr);
     }
     catch (const invalid_argument&)
     {
@@ -100,12 +99,12 @@ void BudgetManager::addTransaction(Type type)
         return;
     }
 
-    // Formatuj kwotê do dwóch miejsc po przecinku
+
     stringstream ss;
     ss << fixed << setprecision(2) << amount;
     string amountFormatted = ss.str();
 
-    // Tworzymy now¹ operacjê
+
     Operation newOperation;
     newOperation.userId = LOGGED_USER_ID;
     newOperation.date = DateMethods::convertStringDateToInt(date);
@@ -123,14 +122,14 @@ void BudgetManager::addTransaction(Type type)
         xml.AddElem("Operations");
     }
 
-    xml.FindElem("Operations");  // ZnajdŸ g³ówny element korzeniowy
-    xml.IntoElem();  // WejdŸ do œrodka <Operations>
+    xml.FindElem("Operations");
+    xml.IntoElem();
 
-    // Generowanie ID dla operacji
-    int newId = 1; // Domyœlne ID
+
+    int newId = 1;
     if (xml.IntoElem()) {
-        // Zwiêksz ID o 1
-        xml.ResetPos(); // Powrót do korzenia
+
+        xml.ResetPos();
         while (xml.FindElem("Operation")) {
             if (xml.FindElem("Id")) {
                 int id = stoi(xml.GetData());
@@ -140,15 +139,15 @@ void BudgetManager::addTransaction(Type type)
             }
         }
     }
-    newOperation.id = newId;  // Przypisanie wygenerowanego ID
+    newOperation.id = newId;
 
     xml.AddElem("Operation");
-    xml.IntoElem();  // WejdŸ do <Operation>
+    xml.IntoElem();
     xml.AddElem("Id", newOperation.id);
     xml.AddElem("UserId", newOperation.userId);
     xml.AddElem("Date", newOperation.date);
     xml.AddElem("Item", newOperation.item);
-    xml.AddElem("Amount", amountFormatted);  // Dodaj kwotê wewn¹trz <Operation>
+    xml.AddElem("Amount", amountFormatted);
 
     if (!xml.Save(fileName)) {
         cout << "Failed to save " << fileName << endl;

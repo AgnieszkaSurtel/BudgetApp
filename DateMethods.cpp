@@ -98,21 +98,21 @@ int DateMethods::getCurrentMonthLastDayDate() {
     int year = currentDate["year"];
     int month = currentDate["month"];
 
-    // Obliczenie ostatniego dnia miesi¹ca
+
     int lastDay;
-    if (month == 2) { // Luty - sprawdzamy rok przestêpny
+    if (month == 2) {
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-            lastDay = 29; // Rok przestêpny
+            lastDay = 29;
         } else {
-            lastDay = 28; // Rok nieprzestêpny
+            lastDay = 28;
         }
     } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-        lastDay = 30; // Miesi¹ce maj¹ce 30 dni
+        lastDay = 30;
     } else {
-        lastDay = 31; // Pozosta³e miesi¹ce maj¹ce 31 dni
+        lastDay = 31;
     }
 
-    // Zwróæ datê w formacie YYYYMMDD
+
     return year * 10000 + month * 100 + lastDay;
 }
 int DateMethods::getPreviousMonthLastDayDate()
