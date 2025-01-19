@@ -14,4 +14,11 @@
 <Item>tezwyplata</Item>
 <Amount>800.75</Amount>
 </Operation>
+<Operation>
+<Id>1</Id>
+<UserId>3</UserId>
+<Date>20250119</Date>
+<Item>sasalalele</Item>
+<Amount>564.55</Amount>
+</Operation>
 </Operations>
