@@ -114,8 +114,7 @@ void BudgetManager::addTransaction(Type type)
     CMarkup xml;
 
     string fileName = (type == INCOME) ? "incomes.xml" : "expenses.xml";
-    bool fileExists = xml.Load(fileName); // Sprawdü, czy plik istnieje
-
+    bool fileExists = xml.Load(fileName);
     if (!fileExists) {
 
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
