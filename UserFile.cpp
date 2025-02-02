@@ -8,7 +8,6 @@ using namespace std;
 bool UserFile::addUserToFile(const User& user)
 {
     CMarkup xml;
-
     bool fileExists = xml.Load("users.xml");
 
     if (!fileExists)
@@ -20,16 +19,39 @@ bool UserFile::addUserToFile(const User& user)
     xml.FindElem("Users");
     xml.IntoElem();
 
+    int lastUserId = 0;
+    while (xml.FindElem("User"))
+    {
+        xml.IntoElem();
+        if (xml.FindElem("UserId"))
+        {
+            int userId = stoi(xml.GetData());
+            if (userId > lastUserId)
+            {
+                lastUserId = userId;
+            }
+        }
+        xml.OutOfElem();
+    }
+
+
+    int newUserId = lastUserId + 1;
+    cout << "last user id w userfile: " << newUserId << endl;
+
+
     xml.AddElem("User");
     xml.IntoElem();
-    xml.AddElem("UserId", to_string(user.getId()));
+    xml.AddElem("UserId", to_string(newUserId));
     xml.AddElem("Login", user.getLogin());
     xml.AddElem("Password", user.getPassword());
     xml.AddElem("FirstName", user.getFirstName());
     xml.AddElem("LastName", user.getLastName());
     xml.OutOfElem();
 
-    xml.Save("users.xml");
+    if (!xml.Save("users.xml")) {
+        cout << "Failed to save users.xml!" << endl;
+        return false;
+    }
     return true;
 }
 
@@ -40,6 +62,7 @@ vector<User> UserFile::loadUsersFromFile()
 
     if (!xml.Load("users.xml"))
     {
+        cout << "No found!" << endl;
         return users;
     }
 
@@ -66,6 +89,10 @@ vector<User> UserFile::loadUsersFromFile()
         if (xml.FindElem("FirstName"))
         {
             user.setFirstName(xml.GetData());
+        }
+         if (xml.FindElem("LastName"))
+        {
+            user.setLastName(xml.GetData());
         }
         xml.OutOfElem();
         users.push_back(user);
@@ -112,10 +139,14 @@ bool UserFile::changePasswordInFile(int id, const string &newPassword)
             break;
         }
 
-        xml.OutOfElem();
+         xml.OutOfElem();
     }
 
-    xml.Save(fileName);
+    if (!xml.Save(fileName)) {
+        cout << "Failed to save " << fileName << " after password change." << endl;
+        return false;
+    }
+
     return userFound;
 }
 

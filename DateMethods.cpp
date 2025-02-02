@@ -91,7 +91,8 @@ int DateMethods::getCurrentMonthFirstDayDate()
     return currentDate["year"] * 10000 + currentDate["month"] * 100 + 1;
 }
 
-int DateMethods::getCurrentMonthLastDayDate() {
+int DateMethods::getCurrentMonthLastDayDate()
+{
     map<string, int> currentDate;
     calculateCurrentDate(currentDate);
 
@@ -100,15 +101,23 @@ int DateMethods::getCurrentMonthLastDayDate() {
 
 
     int lastDay;
-    if (month == 2) {
-        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+    if (month == 2)
+    {
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+        {
             lastDay = 29;
-        } else {
+        }
+        else
+        {
             lastDay = 28;
         }
-    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+    }
+    else if (month == 4 || month == 6 || month == 9 || month == 11)
+    {
         lastDay = 30;
-    } else {
+    }
+    else
+    {
         lastDay = 31;
     }
 

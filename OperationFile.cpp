@@ -1,4 +1,10 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+
 #include "OperationFile.h"
+#include "Markup.h"
 
 using namespace std;
 
@@ -9,26 +15,35 @@ vector<Operation> OperationFile::loadOperationsFromFile(int loggedUserId)
     vector<Operation> operations;
     CMarkup xml;
 
-    if (!xml.Load(fileName))
-        return operations;
-
-    xml.FindElem("Operations");
-    xml.IntoElem();
-
-    while (xml.FindElem("Operation"))
+    if (xml.Load(fileName))
     {
-        Operation operation;
-        xml.IntoElem();
-
-        if (xml.FindElem("UserId") && stoi(xml.GetData()) == loggedUserId)
+        if (xml.FindElem("Root"))
         {
-            if (xml.FindElem("Id")) operation.id = stoi(xml.GetData());
-            if (xml.FindElem("Date")) operation.date = stoi(xml.GetData());
-            if (xml.FindElem("Item")) operation.item = xml.GetData();
-            if (xml.FindElem("Amount")) operation.amount = stod(xml.GetData());
-            operations.push_back(operation);
+            xml.IntoElem();
+            while (xml.FindElem("Operation"))
+            {
+                xml.IntoElem();
+                Operation operation;
+                xml.FindElem("Id");
+                operation.id = stoi(xml.GetData());
+                xml.FindElem("UserId");
+                operation.userId = stoi(xml.GetData());
+                xml.FindElem("Date");
+                operation.date = stoi(xml.GetData());
+                xml.FindElem("Item");
+                operation.item = xml.GetData();
+                xml.FindElem("Amount");
+                operation.amount = stod(xml.GetData());
+                xml.FindElem("Type");
+                operation.type = static_cast<Type>(stoi(xml.GetData()));
+
+                if (operation.userId == loggedUserId)
+                {
+                    operations.push_back(operation);
+                }
+                xml.OutOfElem();
+            }
         }
-        xml.OutOfElem();
     }
 
     return operations;
@@ -37,21 +52,49 @@ vector<Operation> OperationFile::loadOperationsFromFile(int loggedUserId)
 bool OperationFile::addOperationToFile(const Operation& operation)
 {
     CMarkup xml;
-    if (!xml.Load(fileName))
+    bool fileLoaded = xml.Load(fileName);
+
+    if (!fileLoaded)
     {
-        xml.AddElem("Operations");
+        xml.AddElem("Root");
+        xml.IntoElem();
+    }
+    else
+    {
+        xml.FindElem("Root");
+        xml.IntoElem();
     }
 
-    xml.FindElem();
-    xml.IntoElem();
+    int lastId = 0;
+
+    while (xml.FindElem("Operation"))
+    {
+        xml.IntoElem();
+        if (xml.FindElem("Id"))
+        {
+            lastId = stoi(xml.GetData());
+        }
+        xml.OutOfElem();
+    }
+
+    int newId = lastId + 1;
+
     xml.AddElem("Operation");
     xml.IntoElem();
-    xml.AddElem("Id", operation.id);
-    xml.AddElem("UserId", operation.userId);
-    xml.AddElem("Date", operation.date);
+    xml.AddElem("Id", to_string(newId));
+    xml.AddElem("UserId", to_string(operation.userId));
+    xml.AddElem("Date", to_string(operation.date));
     xml.AddElem("Item", operation.item);
-    xml.AddElem("Amount", operation.amount);
+    xml.AddElem("Amount", to_string(operation.amount));
+    xml.AddElem("Type", to_string(operation.type));
+
+    xml.OutOfElem();
     xml.OutOfElem();
 
     return xml.Save(fileName);
 }
+
+
+
+
+

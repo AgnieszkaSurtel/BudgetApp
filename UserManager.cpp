@@ -9,9 +9,9 @@
 
 void UserManager::registerUser()
 {
+    system ("cls");
     User user =  enterUserData();
     users.push_back(user);
-
 
     userFile.addUserToFile(user);
     cout << endl << "Account created successfully" << endl << endl;
@@ -49,11 +49,18 @@ User UserManager::enterUserData()
 
 int UserManager::getLoggedUserId() const
 {
-    if (users.empty() == true)
-        return 1;
-    else return users.back().getId() + 1;
-}
+    if (loggedUserId != -1)
+    {
+        return loggedUserId;
+    }
 
+    if (users.empty())
+    {
+        return 1;
+    }
+
+    return users.back().getId() + 1;
+}
 bool UserManager::checkIfLoginExist (const string &login)
 {
     for (int i = 0; i < users.size(); i++)
@@ -85,7 +92,6 @@ bool UserManager::loginUser()
             system ("pause");
             system ("cls");
             return true;
-
         }
     }
     cout << "Invalid login or password." << endl;
@@ -96,7 +102,11 @@ bool UserManager::loginUser()
 
 bool UserManager::isUserLoggedIn() const
 {
-    return loggedUserId != -1;
+    if(loggedUserId>0)
+        return true;
+    else {
+        return false;
+    }
 }
 
 void UserManager::changeUserPassword()

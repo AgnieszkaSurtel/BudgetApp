@@ -40,12 +40,10 @@ int main ()
             default:
                 cout <<"Character not recognized. Try again: " << endl;
                 break;
-
             }
         }
         else
         {
-
             Menus::showTitle("MAIN MENU");
             Menus::showMainMenu();
 
@@ -79,7 +77,6 @@ int main ()
                 system ("pause");
                 break;
             }
-
         }
     }
 
@@ -87,7 +84,5 @@ int main ()
     cout << "REGISTRATION" << endl << endl;
     userManager.registerUser();
 
-
     return 0;
-
 }

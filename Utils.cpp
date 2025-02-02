@@ -7,7 +7,6 @@ char Utils::getCharacter()
     char character;
     cin >> character;
 
-
     while (cin.fail() || cin.get() != '\n')
     {
         cout << "Invalid input. Please enter a single character: ";

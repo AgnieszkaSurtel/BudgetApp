@@ -26,5 +26,4 @@ void Menus::showMainMenu()
     cout << "8. Logout" << endl;
     cout << endl;
     cout << " Your choice: ";
-
 }

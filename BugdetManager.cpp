@@ -18,17 +18,17 @@ BudgetManager::BudgetManager(const string& incomeFileName, const string& expense
 {
     incomes = incomeFile.loadOperationsFromFile(loggedUserId);
     expenses = expenseFile.loadOperationsFromFile(loggedUserId);
+
+    lastUsedIncomeExpenseId = loadLastUsedId("lastUsedId.xml");
 }
-
-
-
 Operation BudgetManager::addOperationDetails(Type type)
 {
-    Operation operation;
-    operation.userId = LOGGED_USER_ID;
 
     string date, item;
     double amount;
+
+    Operation operation;
+    operation.userId = LOGGED_USER_ID;
 
     cout << "Enter date (YYYY-MM-DD): ";
     cin >> date;
@@ -50,11 +50,109 @@ Operation BudgetManager::addOperationDetails(Type type)
 
     return operation;
 }
+int BudgetManager::loadLastUsedId(const string& fileName)
+{
+    CMarkup xml;
+    int lastId = 0;
+
+    bool fileExists = xml.Load(fileName);
+    if (!fileExists)
+    {
+        cout << "File doesn't exist, creating new file...\n";
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem("Root");
+        xml.AddElem("LastUsedId", "0");
+        xml.Save(fileName);
+        return 0;
+    }
+
+    xml.FindElem("Root");
+    xml.IntoElem();
+    xml.FindElem("LastUsedId");
+    lastId = stoi(xml.GetData());
+
+    return lastId;
+}
+
+void BudgetManager::saveLastUsedId(int lastId)
+{
+    CMarkup xml;
+    bool fileExists = xml.Load("lastUsedId.xml");
+
+    if (!fileExists)
+    {
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem("Root");
+    }
+
+    xml.FindElem("Root");
+    xml.IntoElem();
+
+    if (xml.FindElem("LastUsedId"))
+    {
+        xml.SetData(to_string(lastId));
+    }
+    else
+    {
+        xml.AddElem("LastUsedId", to_string(lastId));
+    }
+    xml.Save("lastUsedId.xml");
+}
 
 void BudgetManager::addTransaction(Type type)
 {
-    string date, description, amountStr;
-    double amount;
+    string date = getTransactionDate();
+    string description = getTransactionDescription();
+    double amount = getTransactionAmount();
+
+    Operation newOperation;
+    newOperation.userId = LOGGED_USER_ID;
+    newOperation.date = DateMethods::convertStringDateToInt(date);
+    newOperation.item = description;
+    newOperation.amount = amount;
+
+    newOperation.id = lastUsedIncomeExpenseId + 1;
+
+    lastUsedIncomeExpenseId++;
+
+    string fileName = (type == INCOME) ? "incomes.xml" : "expenses.xml";
+    saveOperationToFile(newOperation, fileName);
+
+    saveLastUsedId(lastUsedIncomeExpenseId);
+
+    cout << "The transaction was saved successfully.\n";
+}
+
+void BudgetManager::saveOperationToFile(Operation& newOperation, const string& fileName)
+{
+    CMarkup xml;
+    bool fileExists = xml.Load(fileName);
+
+    if (!fileExists)
+    {
+
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem("Root");
+    }
+
+    xml.FindElem("Root");
+    xml.IntoElem();
+
+    xml.AddElem("Operation");
+    xml.IntoElem();
+    xml.AddElem("Id", to_string(newOperation.id));
+    xml.AddElem("UserId", to_string(newOperation.userId));
+    xml.AddElem("Date", to_string(newOperation.date));
+    xml.AddElem("Item", newOperation.item);
+    xml.AddElem("Amount", to_string(newOperation.amount));
+    xml.OutOfElem();
+
+    xml.Save(fileName);
+}
+
+string BudgetManager::getTransactionDate()
+{
+    string date;
     char choice;
 
     cout << "Does it concern today's date? (y/n): ";
@@ -75,9 +173,24 @@ void BudgetManager::addTransaction(Type type)
         }
     }
 
+    return date;
+}
+
+string BudgetManager::getTransactionDescription()
+{
+    string description;
+
     cout << "Enter a description: ";
     cin.ignore();
     getline(cin, description);
+
+    return description;
+}
+
+double BudgetManager::getTransactionAmount()
+{
+    string amountStr;
+    double amount;
 
     cout << "Enter the amount: ";
     getline(cin, amountStr);
@@ -91,69 +204,43 @@ void BudgetManager::addTransaction(Type type)
     catch (const invalid_argument&)
     {
         cout << "Invalid amount. Please enter a numeric value.\n";
-        return;
+        throw;
     }
     catch (const out_of_range&)
     {
         cout << "Amount is out of range. Please enter a valid number.\n";
-        return;
+        throw;
     }
 
-
+    return amount;
+}
+string BudgetManager::formatAmount(double amount)
+{
     stringstream ss;
     ss << fixed << setprecision(2) << amount;
-    string amountFormatted = ss.str();
+    return ss.str();
+}
 
+int BudgetManager::getLastOperationId(CMarkup& xml)
+{
+    int lastId = 0;
 
-    Operation newOperation;
-    newOperation.userId = LOGGED_USER_ID;
-    newOperation.date = DateMethods::convertStringDateToInt(date);
-    newOperation.item = description;
-    newOperation.amount = amount;
-
-    CMarkup xml;
-
-    string fileName = (type == INCOME) ? "incomes.xml" : "expenses.xml";
-    bool fileExists = xml.Load(fileName);
-    if (!fileExists) {
-
-        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-        xml.AddElem("Operations");
-    }
-
-    xml.FindElem("Operations");
-    xml.IntoElem();
-
-
-    int newId = 1;
-    if (xml.IntoElem()) {
-
+    if (xml.IntoElem())
+    {
         xml.ResetPos();
-        while (xml.FindElem("Operation")) {
-            if (xml.FindElem("Id")) {
-                int id = stoi(xml.GetData());
-                if (id >= newId) {
-                    newId = id + 1;
-                }
+        while (xml.FindElem("Operation"))
+        {
+            if (xml.FindChildElem("Id"))
+            {
+                int currentId = stoi(xml.GetChildData());
+                lastId = max(lastId, currentId);
             }
         }
     }
-    newOperation.id = newId;
 
-    xml.AddElem("Operation");
-    xml.IntoElem();
-    xml.AddElem("Id", newOperation.id);
-    xml.AddElem("UserId", newOperation.userId);
-    xml.AddElem("Date", newOperation.date);
-    xml.AddElem("Item", newOperation.item);
-    xml.AddElem("Amount", amountFormatted);
-
-    if (!xml.Save(fileName)) {
-        cout << "Failed to save " << fileName << endl;
-        system("pause");
-    }
+    cout << "Final lastId: " << lastId << endl;
+    return lastId;
 }
-
 
 void BudgetManager::addIncome()
 {
@@ -189,8 +276,6 @@ double BudgetManager::calculateBalance(int startDate, int endDate, const Type& t
         }
     }
 
-
-
     return total;
 }
 
@@ -200,9 +285,14 @@ void BudgetManager::showOperations(const vector<Operation>& operations, int star
     {
         if (op.date >= startDate && op.date <= endDate)
         {
+
+            stringstream ss;
+            ss << fixed << setprecision(2) << op.amount;
+            string formattedAmount = ss.str();
+
             cout << DateMethods::convertIntDateToStringWithDashes(op.date) << " | "
                  << setw(10) << setfill(' ') << op.item << " | "
-                 << fixed << setprecision(2) << op.amount << endl;
+                 << formattedAmount << endl;
         }
     }
 }
@@ -265,7 +355,6 @@ void BudgetManager::showPreviousMonthBalance()
 
     system ("pause");
     system ("cls");
-
 }
 
 void BudgetManager::showCustomPeriodBalance()
@@ -322,6 +411,3 @@ void BudgetManager::sortOperationsByDate(vector<Operation>& operations)
         return a.date < b.date;
     });
 }
-
-
-

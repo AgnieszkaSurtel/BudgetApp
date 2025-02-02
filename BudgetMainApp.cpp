@@ -99,7 +99,7 @@ void BudgetMainApp::showCustomPeriodBalance()
 {
     if (userManager.isUserLoggedIn() && budgetManager != nullptr)
     {
-    budgetManager->showCustomPeriodBalance();
+        budgetManager->showCustomPeriodBalance();
     }
     else
     {

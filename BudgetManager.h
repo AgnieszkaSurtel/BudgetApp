@@ -3,6 +3,7 @@
 
 #include "OperationFile.h"
 #include "DateMethods.h"
+#include "Markup.h"
 #include <vector>
 #include <optional>
 
@@ -12,6 +13,7 @@ class BudgetManager
 {
 private:
     const int LOGGED_USER_ID;
+    int lastUserId;
     OperationFile incomeFile;
     OperationFile expenseFile;
     vector<Operation> incomes;
@@ -20,16 +22,24 @@ private:
     Operation addOperationDetails(Type type);
     void sortOperationsByDate(vector<Operation>& operations);
     double calculateBalance(int startDate, int endDate, const Type& type);
-    //Operation createNewOperation(Type type, const string& date, const string& description, double amount);
+
 
 public:
     BudgetManager(const string& incomeFileName, const string& expenseFileName, int loggedUserId);
 
-    void addTransaction(Type type);
-    //string getTransactionDate();
-    //string getTransactionDescription();
-    //double getTransactionAmount();
+    int lastUsedId;
+    int lastUsedIncomeExpenseId;
 
+    int loadLastUsedId(const string& fileName);
+    void addTransaction(Type type);
+    string getTransactionDate();
+    string getTransactionDescription();
+    double getTransactionAmount();
+    string formatAmount(double amount);
+    int getLastOperationId(CMarkup& xml);
+
+    void saveOperationToFile(Operation& newOperation, const string& fileName);
+    void saveLastUsedId(int lastId);
     void addIncome();
     void addExpense();
     void showOperations(const vector<Operation>& operations, int startDate, int endDate);
@@ -38,5 +48,4 @@ public:
     void showCustomPeriodBalance();
 
 };
-
 #endif
