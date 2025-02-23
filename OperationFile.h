@@ -5,6 +5,7 @@
 #include "Markup.h"
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -18,6 +19,11 @@ public:
 
     vector<Operation> loadOperationsFromFile(int loggedUserId);
     bool addOperationToFile(const Operation& operation);
+    int getLastOperationIdFromFile();
+    int getLastOperationId();
+    int generateNewOperationId();
+    void saveOperationToFile(Operation& newOperation, const string& fileName);
+
 };
 
 #endif

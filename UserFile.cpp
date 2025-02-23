@@ -36,8 +36,6 @@ bool UserFile::addUserToFile(const User& user)
 
 
     int newUserId = lastUserId + 1;
-    cout << "last user id w userfile: " << newUserId << endl;
-
 
     xml.AddElem("User");
     xml.IntoElem();
@@ -62,7 +60,6 @@ vector<User> UserFile::loadUsersFromFile()
 
     if (!xml.Load("users.xml"))
     {
-        cout << "No found!" << endl;
         return users;
     }
 
@@ -149,4 +146,5 @@ bool UserFile::changePasswordInFile(int id, const string &newPassword)
 
     return userFound;
 }
+
 

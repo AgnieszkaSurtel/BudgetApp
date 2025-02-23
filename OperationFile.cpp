@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 #include "OperationFile.h"
 #include "Markup.h"
@@ -95,6 +96,54 @@ bool OperationFile::addOperationToFile(const Operation& operation)
 }
 
 
+int OperationFile::getLastOperationIdFromFile() {
+    CMarkup xml;
+    int lastId = 0;
 
+    if (xml.Load(fileName)) {
+        xml.FindElem("Root");
+        xml.IntoElem();
 
+        while (xml.FindElem("Operation")) {
+            xml.FindChildElem("Id");
+            int currentId = stoi(xml.GetChildData());
+            lastId = max(lastId, currentId);
+        }
+    }
+
+    return lastId;
+}
+
+int OperationFile::generateNewOperationId() {
+    return getLastOperationIdFromFile() + 1;
+}
+void OperationFile::saveOperationToFile(Operation& newOperation, const string& fileName)
+{
+    CMarkup xml;
+    bool fileExists = xml.Load(fileName);
+
+    if (!fileExists)
+    {
+
+        xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+        xml.AddElem("Root");
+    }
+
+    xml.FindElem("Root");
+    xml.IntoElem();
+
+    xml.AddElem("Operation");
+    xml.IntoElem();
+    xml.AddElem("Id", to_string(newOperation.id));
+    xml.AddElem("UserId", to_string(newOperation.userId));
+    xml.AddElem("Date", to_string(newOperation.date));
+    xml.AddElem("Item", newOperation.item);
+
+    stringstream ss;
+    ss << fixed << setprecision(2) << newOperation.amount;
+    xml.AddElem("Amount", ss.str());
+    xml.OutOfElem();
+
+    xml.Save(fileName);
+}
 

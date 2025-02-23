@@ -10,10 +10,9 @@ using namespace std;
 
 int main ()
 {
-    int startDate, endDate;
+
 
     BudgetMainApp budgetMainApp ("users.xml", "incomes.xml", "expenses.xml");
-
     char choice;
 
     while(true)

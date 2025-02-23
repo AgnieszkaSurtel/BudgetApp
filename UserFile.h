@@ -3,6 +3,9 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
+#include <cstdlib>
+
 #include "User.h"
 #include "Markup.h"
 

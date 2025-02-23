@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "User.h"
-
 #include "UserFile.h"
 
 using namespace std;
@@ -18,25 +17,22 @@ class UserManager
 
     User enterUserData();
 
-    void findUserByLogin(const string &login, vector<User>::iterator &itr);
-    void findUserById(int id, vector<User>::iterator &itr);
     bool checkIfLoginExist (const string &login);
 
 public:
 
     UserManager(string userFileName) : userFile(userFileName)
     {
-        users = userFile.loadUsersFromFile();
         loggedUserId = -1;
+        users = userFile.loadUsersFromFile();
+
     }
-    int getLoggedUserId() const;
     void registerUser();
+    int getLoggedUserId() const;
     bool loginUser();
     void changeUserPassword();
     void logoutUser();
     bool isUserLoggedIn() const;
-
-
 };
 
 #endif

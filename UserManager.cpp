@@ -4,7 +4,6 @@
 #include "UserManager.h"
 #include "UserFile.h"
 #include "BudgetManager.h"
-
 #include "UserManager.h"
 
 void UserManager::registerUser()
@@ -61,20 +60,22 @@ int UserManager::getLoggedUserId() const
 
     return users.back().getId() + 1;
 }
+
 bool UserManager::checkIfLoginExist (const string &login)
 {
     for (int i = 0; i < users.size(); i++)
     {
         if (users[i].getLogin() == login)
         {
-            cout << endl << "A user with this login exist " << endl;
+            cout << endl << "A user with this login exist. Please choose a different login " << endl;
+            system ("pause");
+            system ("cls");
             return true;
         }
 
     }
     return false;
 }
-
 bool UserManager::loginUser()
 {
     string login, password;
@@ -99,7 +100,6 @@ bool UserManager::loginUser()
     system ("cls");
     return false;
 }
-
 bool UserManager::isUserLoggedIn() const
 {
     if(loggedUserId>0)
@@ -108,7 +108,6 @@ bool UserManager::isUserLoggedIn() const
         return false;
     }
 }
-
 void UserManager::changeUserPassword()
 {
     string newPassword;
@@ -133,3 +132,4 @@ void UserManager::logoutUser()
     system ("pause");
     system ("cls");
 }
+
